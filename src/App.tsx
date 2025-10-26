@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './App.scss';
 import { GoodsList } from './GoodsList';
 import { Good } from './types/Good';
-import { getAll, get5First, getRedGoods } from './api/goods';
+import { getAllGoods, getFirstFiveGoods, getRedGoods } from './api/goods';
 
 export const App: React.FC = () => {
   const [goods, setGoods] = useState<Good[]>([]);
@@ -14,6 +14,7 @@ export const App: React.FC = () => {
       setLoading(true);
       setError(null);
       const loadedGoods = await loader();
+
       setGoods(loadedGoods);
     } catch {
       setError('Failed to load goods. Please try again.');
@@ -23,13 +24,13 @@ export const App: React.FC = () => {
   };
 
   return (
-  <div className="App">
-    <h1>Dynamic list of Goods</h1>
+    <div className="App">
+      <h1>Dynamic list of Goods</h1>
       <div className="buttons">
         <button
           type="button"
           data-cy="all-button"
-          onClick={() => loadGoods(getAll)}
+          onClick={() => loadGoods(getAllGoods)}
           disabled={loading}
         >
           Load all goods
@@ -37,7 +38,7 @@ export const App: React.FC = () => {
         <button
           type="button"
           data-cy="first-five-button"
-          onClick={() => loadGoods(get5First)}
+          onClick={() => loadGoods(getFirstFiveGoods)}
           disabled={loading}
         >
           Load 5 first goods
